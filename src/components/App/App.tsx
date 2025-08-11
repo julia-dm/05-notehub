@@ -28,10 +28,15 @@ export default function App() {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  const handleSearchChange = (newSearch: string) => {
+    setSearch(newSearch);
+    setPage(1); 
+  };
+
   return (
     <div className={css.app}>
       <header className={css.toolbar}>
-        <SearchBox search={search} onSearchChange={setSearch} />
+        <SearchBox search={search} onSearchChange={handleSearchChange} />
         {data && data.totalPages > 1 && (
           <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
         )}
@@ -45,15 +50,18 @@ export default function App() {
       {data && Array.isArray(data.notes) && data.notes.length > 0 && ( <NoteList notes={data.notes} />
 )}
 
-      {data && Array.isArray(data.results) && data.results.length === 0 && (
-        <p className={css.empty}>No notes found.</p>
-      )}
+{data && Array.isArray(data.notes) && data.notes.length === 0 && (
+  <p className={css.empty}>No notes found.</p>
+)}
 
       {isModalOpen && (
-        <Modal>
+        <Modal onClose={closeModal}>
           <NoteForm onCloseModal={closeModal} resetPage={() => setPage(1)} />
         </Modal>
       )}
     </div>
   );
 }
+
+
+

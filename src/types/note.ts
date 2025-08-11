@@ -1,7 +1,12 @@
+export interface NotesResponse {
+  notes: Note[];
+  totalPages: number;
+}
 export interface Note{
-    id : string;
-     title:string;
-      content :string;
+
+  id : string;
+  title:string;
+  content :string;
 tag:string;
 }
 
