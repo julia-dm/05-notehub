@@ -1,12 +1,14 @@
 
 import axios from 'axios';
-import type { NewNoteData, Note,NotesResponse } from '../types/note';
-import type { NoteUpdateData } from "../types/note";
+import type { NewNoteData, Note} from '../types/note';
+import type { NotesResponse } from "../types/api";
 
 axios.defaults.baseURL="https://notehub-public.goit.study/api"
 axios.defaults.headers.common["Authorization"] = `Bearer ${import.meta.env.VITE_NOTEHUB_TOKEN}`;
 
-export const getNotes = async (search = "", page = 1, perPage = 12) => {
+export const getNotes = async (search: string = "",
+  page: number = 1,
+  perPage: number = 12) : Promise<NotesResponse> => {
   const params = new URLSearchParams();
   if (search) params.append("search", search);
   params.append("page", page.toString());
@@ -26,10 +28,6 @@ export const deleteNote = async (noteId: string): Promise<Note> => {
   return res.data;
 };
 
-export const updateNote = async (noteData: NoteUpdateData): Promise<Note> => {
-  const res = await axios.put<Note>(`/notes/${noteData.id}`, noteData);
-  return res.data;
-};
 
 
 
